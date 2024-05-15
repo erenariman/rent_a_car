@@ -10,31 +10,28 @@ class Car(models.Model):
     mileage = models.IntegerField()
     price_per_day = models.DecimalField(max_digits=10, decimal_places=2)
     available = models.BooleanField(default=True)
+    location = models.CharField(max_length=300, blank=True, null=True)
 
     def __str__(self):
         return f"{self.year} {self.make} {self.model}"
 
 
-class UserProfile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
-    phone_number = models.CharField(max_length=20, blank=True)
-    address = models.TextField(blank=True)
-
-
 class Customer(models.Model):
-    user_profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    phone_number = models.CharField(max_length=20, blank=True)
     rented_cars = models.ManyToManyField(Car, through='Rental')
 
     def __str__(self):
-        return self.user_profile.user.username
+        return self.user.username
 
 
 class Dealer(models.Model):
-    user_profile = models.OneToOneField(UserProfile, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    phone_number = models.CharField(max_length=20, blank=True)
     managed_cars = models.ManyToManyField(Car)
 
     def __str__(self):
-        return self.user_profile.user.username
+        return self.user.username
 
 
 class Rental(models.Model):
@@ -43,7 +40,6 @@ class Rental(models.Model):
     rental_date = models.DateField()
     return_date = models.DateField(blank=True, null=True)
     total_price = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)
-
 
     def __str__(self):
         return f"{self.customer} rented {self.car} on {self.rental_date}"

@@ -1,7 +1,7 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import permissions, viewsets
-from serializers import CarSerializer, RentalSerializer
-from models import Car, Rental
+from .serializers import CarSerializer, RentalSerializer
+from .models import Car, Rental
 
 
 class CarViewSet(viewsets.ModelViewSet):

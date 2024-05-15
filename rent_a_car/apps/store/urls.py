@@ -1,11 +1,9 @@
 from django.urls import include, path
 from rest_framework import routers
-import views
+from .views import CarViewSet, RentalViewSet
 
 router = routers.DefaultRouter()
-router.register(r'users', views.UserViewSet)
+router.register(r'car', CarViewSet, basename='car')
+router.register(r'rental', RentalViewSet, basename='rental')
 
-urlpatterns = [
-    path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
-]
+urlpatterns = router.urls

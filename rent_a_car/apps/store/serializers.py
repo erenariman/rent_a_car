@@ -1,6 +1,6 @@
 from django.contrib.auth.models import Group, User
 from rest_framework import serializers
-from models import UserProfile, Car, Customer, Dealer, Rental
+from .models import Car, Customer, Dealer, Rental
 
 
 class CarSerializer(serializers.ModelSerializer):
